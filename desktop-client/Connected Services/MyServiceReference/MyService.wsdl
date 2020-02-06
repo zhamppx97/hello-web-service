@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloService">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloServiceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloServiceResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloServiceSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloService" />
+  </wsdl:message>
+  <wsdl:message name="HelloServiceSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloServiceResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MyServiceSoap">
+    <wsdl:operation name="HelloService">
+      <wsdl:input message="tns:HelloServiceSoapIn" />
+      <wsdl:output message="tns:HelloServiceSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MyServiceSoap" type="tns:MyServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloService">
+      <soap:operation soapAction="http://tempuri.org/HelloService" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MyServiceSoap12" type="tns:MyServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloService">
+      <soap12:operation soapAction="http://tempuri.org/HelloService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MyService">
+    <wsdl:port name="MyServiceSoap" binding="tns:MyServiceSoap">
+      <soap:address location="https://localhost:44338/MyService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MyServiceSoap12" binding="tns:MyServiceSoap12">
+      <soap12:address location="https://localhost:44338/MyService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
